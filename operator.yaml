@@ -1,0 +1,9 @@
+apiVersion: operators.coreos.com/v1
+kind: CatalogSourceConfig
+metadata:
+  name: operators
+  namespace: openshift-marketplace
+spec:
+  source: redhat-operators
+  targetNamespace: openshift-operators
+  packages: serverless-operator
