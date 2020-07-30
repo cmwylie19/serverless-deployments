@@ -8,7 +8,7 @@ Below is a picture of the source code of the greet endpoint for reference.
    
    ![Greet Endpoint](greet.png)
 
-The application has been containerized and push to quay container registry, the image is available [here](quay.io/cmwylie19/node-server).   
+The application has been containerized and pushed to an image repository, the image is available [here](quay.io/cmwylie19/node-server).   
 
 
 ## Installing Serverless on OpenShift
@@ -78,7 +78,7 @@ wget https://storage.googleapis.com/knative-nightly/client/latest/kn-darwin-amd6
 
 In the next section we are going to deploy the image of the node application into the serverless environment.   
 
-## Deploying our NodeJS app image into OpenShift Serverless
+## Deploying our NodeJS app image into Serverless
 Now it is time to deploy the image of the node application from the container registry into our serverless environment. The first thing we are going to do is create a new project (or namespace) where our application will live.   
 
 If you are running OpenShift you will use the following command to create the project 
