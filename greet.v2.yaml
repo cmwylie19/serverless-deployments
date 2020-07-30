@@ -1,0 +1,12 @@
+Creating service 'greeter-app-green' in namespace 'default':
+
+  0.036s The Configuration is still working to reflect the latest desired specification.
+  0.172s The Route is still working to reflect the latest desired specification.
+  0.266s Configuration "greeter-app-green" is waiting for a Revision to become ready.
+  5.063s ...
+  5.230s Ingress has not yet been reconciled.
+  5.392s unsuccessfully observed a new generation
+  5.555s Ready to serve.
+
+Service 'greeter-app-green' created to latest revision 'greeter-app-green-hhncl-1' is available at URL:
+http://greeter-app-green.default.192.168.64.15.nip.io

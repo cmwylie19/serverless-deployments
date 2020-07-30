@@ -1,0 +1,12 @@
+Creating service 'greeter-app' in namespace 'default':
+
+  0.204s The Configuration is still working to reflect the latest desired specification.
+  0.324s The Route is still working to reflect the latest desired specification.
+  0.464s Configuration "greeter-app" is waiting for a Revision to become ready.
+ 71.239s ...
+ 71.390s Ingress has not yet been reconciled.
+ 71.606s unsuccessfully observed a new generation
+ 71.797s Ready to serve.
+
+Service 'greeter-app' created to latest revision 'greeter-app-jdwly-1' is available at URL:
+http://greeter-app.default.192.168.64.15.nip.io
