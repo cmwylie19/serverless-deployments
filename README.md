@@ -97,12 +97,12 @@ $ kubectl create namespace greeter-ns
 Have created the greeter-ns project we are going to deploy the NodeJS application image as a Knative service or ksvc. We are going to give a window of 10 seconds for the pod to scale down to 0 if no further requests are recieved. We are going to pipe the output to a file so that we can easily refer to the service url later.
 
 ``` 
-$ kn service create greeter-app --image quay.io/cmwylie19/node-server --autoscale-window 10s > greet.v1.yaml
+$ kn service create greeter-app --image quay.io/cmwylie19/node-server --autoscale-window 10s 
 ```
 
 Curl against the url in the last line of the terminal output   
 ![terminal output](ksvc.png)   
-> curl $(tail -1 greet.v1.yaml)/greet  
+> curl $(kn service list greeter-app | awk 'FNR == 2 { print $2 }')/greet  
 
 That's it!
 
@@ -112,7 +112,7 @@ Now that we have our application released into production we are going to do a b
 
 ### Create a green deployment
 ```  
-$ kn service create greeter-app-green --image quay.io/cmwylie19/node-server --env LANGUAGE=ES > greet.v2.yaml
+$ kn service create greeter-app-green --image quay.io/cmwylie19/node-server --env LANGUAGE=ES 
 ```
 
 ![terminal output](green.png)  
@@ -120,7 +120,7 @@ $ kn service create greeter-app-green --image quay.io/cmwylie19/node-server --en
 ### Curl against the green version
 Now you are going to make a GET request to the new green version of the application. This time you should get "hola!". 
 
-> curl $(tail -1 greet.v2.yaml)/greet
+> curl $(kn service list greeter-app-green | awk 'FNR == 2 { print $2 }')/greet
 
 Now we have successfully deployed a green version of our OpenShift Serverless application!
 
@@ -140,7 +140,7 @@ kn service update greeter-app --traffic $(kn revision list | awk 'FNR == 2 {prin
 ### Test Our deployment
 Now we test our deployment with a shell one-liner   
 ```
-$ for x in $(seq 20); do curl $(tail -1 greet.v1.yaml)/greet done
+$ for x in $(seq 20); do curl $(kn service list | awk 'FNR == 2 { print $2 }')/greet; done;
 ```
 
 
