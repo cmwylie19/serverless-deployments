@@ -127,12 +127,7 @@ Now we have successfully deployed a green version of our OpenShift Serverless ap
 ## Canary Deployment
 This time we are going to do a canary deployment of the original version of our knative service. Our goal is that 50% of the traffic goes to the container with LANGUAGE set to “EN” and 50% goes to the container with the LANGUAGE set to “ES”.
 
-### Look at the revisions
-```
-kn revision list
-```
-The idea is that we edit the configuration of the knative service node-server to split 50% of the traffic to original revision(blue), and 50% to the latest revision(green).
-
+We will update the greeter-app service to shift 50% of the traffic to the original revision and 50% to the latest revision.
 ```
 kn service update greeter-app --traffic $(kn revision list | awk 'FNR == 2 {print $1}')=50,$(kn revision list | awk 'FNR == 3 {print $1}')=50
 ```
