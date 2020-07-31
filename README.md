@@ -126,7 +126,7 @@ kn service create greeter-service-2 --image quay.io/cmwylie19/node-server --env 
 Now you are going to make a GET request to the new green version of the application. This time you should get "hola!". 
 
 ```
-curl $(kn service list greeter-service | awk 'FNR == 2 { print $2 }')/greet
+curl $(kn service list greeter-service-2 | awk 'FNR == 2 { print $2 }')/greet
 ```
 
 Now we have successfully deployed a green version of our OpenShift Serverless application! 
