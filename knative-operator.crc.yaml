@@ -1,0 +1,128 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  creationTimestamp: '2020-07-31T13:10:04Z'
+  generation: 1
+  managedFields:
+    - apiVersion: operators.coreos.com/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          .: {}
+          'f:channel': {}
+          'f:installPlanApproval': {}
+          'f:name': {}
+          'f:source': {}
+          'f:sourceNamespace': {}
+          'f:startingCSV': {}
+      manager: Mozilla
+      operation: Update
+      time: '2020-07-31T13:10:04Z'
+    - apiVersion: operators.coreos.com/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:config':
+            .: {}
+            'f:resources': {}
+        'f:status':
+          'f:installedCSV': {}
+          'f:currentCSV': {}
+          'f:catalogHealth': {}
+          'f:installPlanRef':
+            .: {}
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+            'f:namespace': {}
+            'f:resourceVersion': {}
+            'f:uid': {}
+          'f:installPlanGeneration': {}
+          'f:conditions': {}
+          .: {}
+          'f:installplan':
+            .: {}
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+            'f:uuid': {}
+          'f:lastUpdated': {}
+          'f:state': {}
+      manager: catalog
+      operation: Update
+      time: '2020-07-31T13:10:10Z'
+  name: serverless-operator
+  namespace: openshift-operators
+  resourceVersion: '328284'
+  selfLink: >-
+    /apis/operators.coreos.com/v1alpha1/namespaces/openshift-operators/subscriptions/serverless-operator
+  uid: d2ec9bbf-ac68-49fa-a710-457e269f36f1
+spec:
+  channel: '4.5'
+  installPlanApproval: Automatic
+  name: serverless-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: serverless-operator.v1.7.2
+status:
+  installplan:
+    apiVersion: operators.coreos.com/v1alpha1
+    kind: InstallPlan
+    name: install-fwvp9
+    uuid: e594250c-2481-462b-b57a-df3d9a4a664f
+  lastUpdated: '2020-07-31T13:10:10Z'
+  installedCSV: serverless-operator.v1.7.2
+  currentCSV: serverless-operator.v1.7.2
+  installPlanRef:
+    apiVersion: operators.coreos.com/v1alpha1
+    kind: InstallPlan
+    name: install-fwvp9
+    namespace: openshift-operators
+    resourceVersion: '328057'
+    uid: e594250c-2481-462b-b57a-df3d9a4a664f
+  state: AtLatestKnown
+  catalogHealth:
+    - catalogSourceRef:
+        apiVersion: operators.coreos.com/v1alpha1
+        kind: CatalogSource
+        name: certified-operators
+        namespace: openshift-marketplace
+        resourceVersion: '327329'
+        uid: 6d6a2d69-2687-4fb5-8cb7-259d272c7fa6
+      healthy: true
+      lastUpdated: '2020-07-31T13:10:04Z'
+    - catalogSourceRef:
+        apiVersion: operators.coreos.com/v1alpha1
+        kind: CatalogSource
+        name: community-operators
+        namespace: openshift-marketplace
+        resourceVersion: '327326'
+        uid: fd19b6a8-f926-4409-8021-79a1a2e99d29
+      healthy: true
+      lastUpdated: '2020-07-31T13:10:04Z'
+    - catalogSourceRef:
+        apiVersion: operators.coreos.com/v1alpha1
+        kind: CatalogSource
+        name: redhat-marketplace
+        namespace: openshift-marketplace
+        resourceVersion: '327337'
+        uid: 0af02753-f18f-4e16-8827-a165a13561b8
+      healthy: true
+      lastUpdated: '2020-07-31T13:10:04Z'
+    - catalogSourceRef:
+        apiVersion: operators.coreos.com/v1alpha1
+        kind: CatalogSource
+        name: redhat-operators
+        namespace: openshift-marketplace
+        resourceVersion: '327338'
+        uid: 5254ff13-3b35-4b76-968f-6002eb2e71ca
+      healthy: true
+      lastUpdated: '2020-07-31T13:10:04Z'
+  conditions:
+    - lastTransitionTime: '2020-07-31T13:10:04Z'
+      message: all available catalogsources are healthy
+      reason: AllCatalogSourcesHealthy
+      status: 'False'
+      type: CatalogSourcesUnhealthy
+  installPlanGeneration: 1
+
