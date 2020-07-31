@@ -1,5 +1,5 @@
 # Blue/Green and Canary Deployments in Serverless
-This lab is about deployments in OpenShift Serverless. During the lab we will do a blue/green and canary deployment of a NodeJS application. This lab has been tested using CodeReady Containers in OpenShift 4.5.  Instructions for local development with minikube can be found [here](https://gitlab.consulting.redhat.com/appdev-coe/cloud-native-appdev-enablement/serverless-enablement/introduction/-/blob/master/minikube.md).
+This lab is about deployments in OpenShift Serverless. During the lab we will do a blue/green and canary deployment of a NodeJS application. This lab has been tested using CodeReady Containers in OpenShift 4.5.  Instructions for local development with minikube can be found [here](https://github.com/cmwylie19/minikube-serverless/blob/master/README.md).
 
 
 The app that we are going to deploy has one endpoint, /greet, which is accessible via a GET request. The greet endpoint returns “hello!” when the environmental variable LANGUAGE is set to “EN”, and “hola!” when LANGUAGE is set to “ES”.   
