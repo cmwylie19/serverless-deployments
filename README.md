@@ -130,11 +130,7 @@ Now you are going to make a GET request to the new green version of the applicat
 curl $(kn service list greeter-app-green | awk 'FNR == 2 { print $2 }')/greet
 ```
 
-Now we have successfully deployed a green version of our OpenShift Serverless application! We can delete the green version since we won't be needing it anymore.
-
-```
-kn service delete greeter-app-green
-```
+Now we have successfully deployed a green version of our OpenShift Serverless application! 
 
 ## Canary Deployment
 This time we are going to do a canary deployment of the original version of our knative service. Our goal is that 50% of the traffic goes to the container with LANGUAGE set to “EN” and 50% goes to the container with the LANGUAGE set to “ES”.
