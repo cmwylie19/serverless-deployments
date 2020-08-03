@@ -51,7 +51,7 @@ oc new-project knative-serving
 
 ### Install the Knative serving operator
 ```
-oc apply -f knative-serving
+oc apply -f knative-serving.yaml
 ``` 
 
 
