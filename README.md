@@ -128,7 +128,11 @@ We can access the green version by via the url of the knative service prefixed b
 Now you are going to make a GET request to the new green version of the application. This time you should get "hola!". 
 
 ```
+<<<<<<< HEAD
 curl $(kn service list greeter-service -n greeter-ns | awk 'FNR == 2 { print $2 }' | sed 's/greeter-service/green-greeter-service/g')/greet
+=======
+curl $(kn service list greeter-service-2 | awk 'FNR == 2 { print $2 }')/greet
+>>>>>>> 77603f775c8c170f60f1af994b2164fad1a4cb54
 ```
 
 Now we have successfully deployed a green version of our OpenShift Serverless application by updating the knative service and accessessing the green revision.
