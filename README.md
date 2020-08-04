@@ -91,12 +91,12 @@ On a minikube vm you will use
 kubectl create namespace greeter-ns
 ```
 
-Now that we have created the greeter-ns project we are going to deploy the NodeJS application image as a Knative service or ksvc and give the pod running the application a window of 10 seconds to scale back down to 0 if no further requests are recieved.
+Now that we have created the namespace we are going to deploy the NodeJS application image as a Knative service or ksvc and give the pod running the application a window of 10 seconds to scale back down to 0 if no further requests are recieved.
 
-We are going to use `kn service create`, specifiy the name of the service, the image from which to use to generate the service, and the autoscale window.
+We are going to use `kn service create`, specify the name of the service, the image from which to use to generate the service, the autoscale window of 10 seconds and the namespace of `greeter-ns`.
 
 ``` 
-kn service create greeter-service --image quay.io/cmwylie19/node-server --autoscale-window 10s 
+kn service create greeter-service --image quay.io/cmwylie19/node-server --autoscale-window 10s -n greeter-ns
 ```
 
 You should receive output similar to that of the image below. The last line of the output contains a url where the knative service can be accessed.
@@ -104,45 +104,47 @@ You should receive output similar to that of the image below. The last line of t
  
 ![terminal output](ksvc.png)   
 
-We are going to test our application by curling against the /greet endpoint of the knative service, we should expect to receive "Hello!".   
+We are going to test our application by curling against the /greet endpoint of the knative service, we should expect to receive "Hello!". We can find the address of the knative service in the last line of the terminal output. Just incase you forget, you can find the address of the service by invoking the command `kn service describe greeter-service -n greeter-ns`.   
 
 ```
-curl $(kn service list greeter-service | awk 'FNR == 2 { print $2 }')/greet  
+curl $(kn service list greeter-service -n greeter-ns | awk 'FNR == 2 { print $2 }')/greet  
 ```
 
-In the next section we are going to talk about blue green deployments. We will create a brand new knative service identical to the service that we just created, only with a the LANGUAGE environmental variable set to "ES" for spanish.
+In the next section we are going to talk about blue green deployments. We will update our knative service with a new environmental variable for LANGUAGE and adjust the traffic so that traffic does not flow to the updated service. We prevent traffic from flowing to the new service by default 
 
 ## Blue/Green Deployment 
-Now that we have our application has been released into production we are going to do a blue/green deployment. To help demonstrate the different versions of the application we are going to change the LANGUAGE environmental variable in the container to ES to make the greet endpoint return “hola”  instead of "hello".
+Now that we have our application has been released into production we are going to do a blue/green deployment. To help demonstrate the different versions of the application we are going to change the LANGUAGE environmental variable in the knative service to ES to make the greet endpoint return “hola”  instead of "hello".   
 
+We do a blue/green deployment in OpenShift Serverless by updating the knative service. Each time we update a service in knative a new revision is created. We will tag the revision then use the tag to manage the flow of traffic. We will use the tag of 'blue' to refer to the service with LANGUAGE set to "EN" and 'green' to refer to the service where LANGUAGE is set to 'blue'. A major use-case of a blue/green deployment is so you can test out a new version or feature of your application in a production environment without disturbing your users so we will declare 0% of the traffic to go to the 'green' version of the application.
 
 ### Create a green deployment
-```  
-kn service create greeter-service-2 --image quay.io/cmwylie19/node-server --env LANGUAGE=ES --autoscale-window 10s 
+```
+kn  service update greeter-service -n greeter-ns --env LANGUAGE=ES --tag $(kn service list greeter-service -n greeter-ns | awk 'FNR == 2 { print $3 }')=blue --tag @latest=green --traffic blue=100,green=0
 ```
 
-![terminal output](green.png)  
 
+![terminal output](green.png)  
+We can access the green version by via the url of the knative service prefixed by the revision name and a dash. For example, if the url of the knative service is "http://greeter-service-greeter-ns.apps-crc.testing", you can green version at "http://green-greeter-service-greeter-ns.apps-crc.testing".
 Now you are going to make a GET request to the new green version of the application. This time you should get "hola!". 
 
 ```
-curl $(kn service list greeter-service-2 | awk 'FNR == 2 { print $2 }')/greet
+curl $(kn service list greeter-service -n greeter-ns | awk 'FNR == 2 { print $2 }' | sed 's/greeter-service/green-greeter-service/g')/greet
 ```
 
-Now we have successfully deployed a green version of our OpenShift Serverless application! 
+Now we have successfully deployed a green version of our OpenShift Serverless application by updating the knative service and accessessing the green revision.
 
 ## Canary Deployment
-This time we are going to do a canary deployment of the original version of our knative service. Our goal is that 50% of the traffic goes to the container with LANGUAGE set to “EN” and 50% goes to the container with the LANGUAGE set to “ES”.
+This time we are going to do a canary deployment of our knative service. Our goal is that 50% of the traffic goes to the container with LANGUAGE set to “EN” and 50% goes to the container with the LANGUAGE set to “ES”.
 
-We will update the greeter-app service to shift 50% of the traffic to the original revision and 50% to the latest revision.
+We will update the greeter-app service to shift 50% of the traffic to the blue revision and 50% to the green revision.
 ```
-kn service update greeter-service --traffic $(kn revision list | awk 'FNR == 2 {print $1}')=50,$(kn revision list | awk 'FNR == 3 {print $1}')=50
+kn service update greeter-service -n greeter-ns --traffic $(kn revision list -n greeter-ns | awk 'FNR == 2 {print $1}')=50,$(kn revision list -n greeter-ns | awk 'FNR == 3 {print $1}')=50
 ```
 
 ### Test Our deployment
 Now we test our deployment with a shell one-liner   
 ```
-for x in $(seq 20); do curl $(kn service list | awk 'FNR == 2 { print $2 }')/greet; done;
+for x in $(seq 20); do curl $(kn service list -n greeter-ns | awk 'FNR == 2 { print $2 }')/greet; echo "\n"; done;
 ```
 
 
@@ -151,7 +153,7 @@ Now you have deployed an app in OpenShift Serverless, created a Blue/Green Deplo
 ### Clean up
 On OpenShift
 ```
-oc delete project greeter-ns
+oc delete namespace greeter-ns
 ```
 
 On minikube
