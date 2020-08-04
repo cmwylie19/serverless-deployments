@@ -119,7 +119,7 @@ We do a blue/green deployment in OpenShift Serverless by updating the knative se
 
 ### Create a green deployment
 ```
-kn  service update greeter-service -n greeter-ns --env LANGUAGE=ES --tag $(kn service list greeter-service -n greeter-ns | awk 'FNR == 2 { print $3 }')=blue --tag @latest=green --traffic blue=100,green=0
+kn service update greeter-service -n greeter-ns --env LANGUAGE=ES --tag $(kn service list greeter-service -n greeter-ns | awk 'FNR == 2 { print $3 }')=blue --tag @latest=green --traffic blue=100,green=0
 ```
 
 
