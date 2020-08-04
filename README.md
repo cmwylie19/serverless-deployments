@@ -11,7 +11,7 @@ Below is a picture of the source code of the greet endpoint for reference.
 The application has been containerized and pushed to an image repository, the image is available [here](quay.io/cmwylie19/node-server).   
 
 ## Prereqs
-I have installing `wget` listed as a PREREQ in order to simply the process of installing the `kn` cli later on in the lab, this part is _not mandatory_ but will make the installation process easier.   
+I have installing `wget` listed as a PREREQ in order to simply the process of installing the `kn` cli tool later on in the lab, this part is _not mandatory_ but will make the installation process easier.   
 
 ### Installing `wget`   
 _You may need the prefix sudo depeding on whether are you using linux or mac and the distro you are using._   
@@ -37,7 +37,7 @@ brew install wget
 ```
 
 ## Configuring Serverless in OpenShift
-We will start by installing Serverless in OpenShift via the OpenShift Serverless Operator. If you are using [minikube](https://gitlab.consulting.redhat.com/appdev-coe/cloud-native-appdev-enablement/serverless-enablement/introduction/-/blob/master/minikube.md) you can skip to the section on installing the knative cli.
+We will start by installing Serverless in OpenShift via the OpenShift Serverless Operator. If you are using [minikube](https://gitlab.consulting.redhat.com/appdev-coe/cloud-native-appdev-enablement/serverless-enablement/introduction/-/blob/master/minikube.md) you can *skip to the section on installing the knative cli*.
 
 ### Install the OpenShift Serverless Operator and subscription
 ```
