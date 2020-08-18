@@ -40,6 +40,7 @@ brew install wget
 We will start by installing Serverless in OpenShift via the OpenShift Serverless Operator. If you are using [minikube](https://gitlab.consulting.redhat.com/appdev-coe/cloud-native-appdev-enablement/serverless-enablement/introduction/-/blob/master/minikube.md) you can *skip to the section on installing the knative cli*.
 
 ### Install the OpenShift Serverless Operator and subscription
+Follow the instructions listed [here](https://docs.openshift.com/container-platform/4.5/serverless/installing_serverless/installing-knative-serving.html) if you are using an OpenShift Cluster. If you are using CodeReady Containers you can use `oc apply` on the knative-operator.crc.yaml to get the operator i nstalled.
 ```
 oc apply -f knative-operator.crc.yaml 
 ```
